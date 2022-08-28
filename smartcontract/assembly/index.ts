@@ -1,4 +1,4 @@
-import { Item, itemsStorage, ownersStorage } from "./model";
+import { Item, itemsStorage} from "./model";
 import { context, ContractPromiseBatch, u128 } from "near-sdk-as";
 
 // buying a game item from the marketplace
