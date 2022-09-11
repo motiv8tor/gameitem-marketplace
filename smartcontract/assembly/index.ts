@@ -141,7 +141,7 @@ export function setItem(item: Item): void {
 		throw new Error(`an item with id=${item.id} already exists`);
 	}
 	itemsStorage.set(item.id, Item.fromPayload(item));
-	ownersStorage.set(context.sender, true);
+	
 }
 
 export function getItem(id: string): Item | null {
