@@ -54,7 +54,7 @@ const AddItem = ({ save }) => {
                 type="text"
                 placeholder="item category"
                 onChange={(e) => {
-                  itemCategory(e.target.value);
+                  setItemCategory(e.target.value);
                 }}
               />
             </FloatingLabel>

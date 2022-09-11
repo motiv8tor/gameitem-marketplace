@@ -3,7 +3,7 @@ import { Container, Nav } from "react-bootstrap";
 import { login, logout as destroy, accountBalance } from "./utils/near";
 import Wallet from "./components/Wallet";
 import { Notification } from "./components/utils/Notifications";
-import Books from "./components/marketplace/Books";
+import Books from "./components/marketplace/Items";
 import Cover from "./components/utils/Cover";
 import "./App.css";
 

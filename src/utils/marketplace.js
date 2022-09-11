@@ -13,8 +13,17 @@ export async function buyItem({ Id, price }) {
   await window.contract.buyGameItem({ itemId: Id }, GAS, price);
 }
 
-export function exchangeItem( ownerId, callerId ) {
-  return window.contract.exchangeGameItem( { owneritemId: ownerId, calleritemId: callerId }, GAS );
+export function exchangeItem( id ) {
+  return window.contract.exchangeGameItem( { itemId: id  }, GAS );
+}
+
+export function requestExchange( requestItemId, forItemId ) {
+  return window.contract.requestExchange( { requestItemId: requestItemId, forItemId: forItemId }, GAS );
+}
+
+
+export function rejectExchange( id ) {
+  return window.contract.rejectExchange( { itemId: id}, GAS );
 }
 
 export function changeForsale( Id ) {

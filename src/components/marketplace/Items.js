@@ -13,6 +13,8 @@ import {
   exchangeItem,
   changeForsale,
   changeForexchange,
+  rejectExchange,
+  requestExchange
 } from "../../utils/marketplace";
 
 
@@ -49,11 +51,11 @@ const Items = () => {
     }
   };
 
-  const exchange = async (ownerId, callerId) => {
+  const exchange = async (id) => {
     setLoading(true);
 
     try {
-      await exchangeItem(ownerId, callerId).then((resp) => {
+      await exchangeItem(id).then((resp) => {
         toast(<NotificationSuccess text="item exchanged successfully." />);
         getItems();
       });
@@ -65,17 +67,51 @@ const Items = () => {
     }
   };
 
+  const RequestExchange = async ( requestItemId, forItemId ) => {
+    setLoading(true);
+
+    try {
+      await requestExchange(requestItemId, forItemId).then((resp) => {
+        toast(<NotificationSuccess text="you have successfully requested for an exchange" />);
+        getItems();
+      });
+    } catch (error) {
+      console.log({ error });
+      toast(<NotificationError text="Failed to request for exchange." />);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  const RejectExchange = async ( Id ) => {
+    setLoading(true);
+
+    try {
+      await rejectExchange(Id).then((resp) => {
+        toast(<NotificationSuccess text="you successfully rejected the exchange" />);
+        getItems();
+      });
+    } catch (error) {
+      console.log({ error });
+      toast(<NotificationError text="Failed to reject exchange." />);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   const toggleForsale = async ( Id ) => {
     setLoading(true);
 
     try {
       await changeForsale(Id).then((resp) => {
-        toast(<NotificationSuccess text="you successfully changed the forsale property" />);
+        toast(<NotificationSuccess text="you successfully changed the forsale state" />);
         getItems();
       });
     } catch (error) {
       console.log({ error });
-      toast(<NotificationError text="Failed to change for sale property." />);
+      toast(<NotificationError text="Failed to change for sale state." />);
     } finally {
       setLoading(false);
     }
@@ -138,6 +174,8 @@ const Items = () => {
                 toggleForexchange={toggleForexchange}
                 toggleForsale={toggleForsale}
                 isOwner = {account.accountId === _item.owner}
+                RequestExchange ={RequestExchange}
+                RejectExchange={RejectExchange}
               />
             ))}
           </Row>

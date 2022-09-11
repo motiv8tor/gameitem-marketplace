@@ -4,10 +4,10 @@ import { utils } from "near-api-js";
 import { Card, Button, Col, Badge, Stack, Form } from "react-bootstrap";
 import { useState } from "react";
 
-const Item = ({ item, buy, exchange, toggleForexchange, toggleForsale, isOwner}) => {
-  const { id, gameTitle, itemCategory, description, image, price, owner, forSale, forExchange } = item;
+const Item = ({ item, buy, exchange, toggleForexchange, RequestExchange, RejectExchange, toggleForsale, isOwner}) => {
+  const { id, gameTitle, itemCategory, description, image, price, owner, forSale, forExchange, requestExchangeId, approvedExchange, approvedId } = item;
 
-    const [callerId, setCallerId] = useState('');
+    const [forItemId, setforItemId] = useState('');
   
 
   const triggerBuy = () => {
@@ -15,7 +15,7 @@ const Item = ({ item, buy, exchange, toggleForexchange, toggleForsale, isOwner})
   };
 
   const triggerexchange = () => {
-    exchange(id, callerId);
+    exchange(id);
   };
 
 
@@ -24,6 +24,14 @@ const Item = ({ item, buy, exchange, toggleForexchange, toggleForsale, isOwner})
   };
   const triggertoggleForexchange = () => {
     toggleForexchange(id);
+  };
+
+  const triggerRejectExchange = () => {
+    RejectExchange(id);
+  };
+
+  const triggerRequestExchange = () => {
+    RequestExchange(id, forItemId);
   };
 
   return (
@@ -35,7 +43,7 @@ const Item = ({ item, buy, exchange, toggleForexchange, toggleForsale, isOwner})
           </Stack>
         </Card.Header>
         <div className=" ratio ratio-4x3">
-          <img src={image} alt={author} style={{ objectFit: "cover" }} />
+          <img src={image} alt={gameTitle} style={{ objectFit: "cover" }} />
         </div>
 
         <Card.Body className="d-flex  flex-column text-center">
@@ -44,7 +52,7 @@ const Item = ({ item, buy, exchange, toggleForexchange, toggleForsale, isOwner})
           <Card.Text className="flex-grow-1 ">{description}</Card.Text>
           <Card.Text className="flex-grow-1 ">{forSale ? "This item is for sale": "This item is not for sale"}</Card.Text>
           <Card.Text className="flex-grow-1 ">{forExchange ? "This item is available for exchange": "This item is not available for exchange"}</Card.Text>
-
+          <Card.Text className="flex-grow-1 ">Exchange Request: {requestExchangeId} <br/> Status: {approvedExchange ? "Approved" : "Not Approved"}</Card.Text>
 {isOwner === true  && (
     <> 
 
@@ -58,7 +66,7 @@ const Item = ({ item, buy, exchange, toggleForexchange, toggleForsale, isOwner})
 </>
 )}
 
-{isOwner === true  && (
+{isOwner === true  && approvedExchange === true &&(
     <> 
 
 <Button
@@ -72,21 +80,47 @@ const Item = ({ item, buy, exchange, toggleForexchange, toggleForsale, isOwner})
 )}
 
 
-{isOwner !== true  && forExchange == true &&(
+{isOwner === true  && forExchange === true && approvedExchange === true &&(
+    <> 
+<Button
+  variant="primary"
+  className={"mb-4"}
+  onClick={() =>triggerexchange()}
+>
+  
+</Button>
+</>
+)}
+
+
+{isOwner !== true  && forExchange == true && approvedExchange == false &&(
     <> 
     <Form.Control
      className={"pt-2 mb-1"}
       type="number"
-       placeholder="Enter your element Id"
+       placeholder="Enter the id of your item "
        onChange={(e) => {
-         setCallerId(e.target.value);
+         setforItemId(e.target.value);
         }}
     />
 
 <Button
   variant="primary"
   className={"mb-4"}
-  onClick={() =>triggerexchange()}
+  onClick={() =>triggerRequestExchange()}
+>
+  
+</Button>
+</>
+)}
+
+
+{isOwner == true  && forExchange == true &&(
+    <> 
+<Button
+  variant="primary"
+  className={"mb-4"}
+  onClick={() =>triggerRejectExchange()}
 >
   
 </Button>
