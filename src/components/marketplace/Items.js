@@ -11,10 +11,10 @@ import {
   buyItem,
   makeItem,
   exchangeItem,
+  RejectExchange,
+  RequestExchange,
   changeForsale,
   changeForexchange,
-  rejectExchange,
-  requestExchange
 } from "../../utils/marketplace";
 
 
@@ -67,51 +67,48 @@ const Items = () => {
     }
   };
 
-  const RequestExchange = async ( requestItemId, forItemId ) => {
-    setLoading(true);
 
+  const requestexchange = async (requestItemId, forItemId) => {
+    setLoading(true);
     try {
-      await requestExchange(requestItemId, forItemId).then((resp) => {
-        toast(<NotificationSuccess text="you have successfully requested for an exchange" />);
+      await RequestExchange(requestItemId, forItemId).then((resp) => {
+        toast(<NotificationSuccess text="you successfully requested for exchange" />);
         getItems();
       });
     } catch (error) {
       console.log({ error });
-      toast(<NotificationError text="Failed to request for exchange." />);
+      toast(<NotificationError text="Failed to request for exchange" />);
     } finally {
       setLoading(false);
     }
   };
 
-
-  const RejectExchange = async ( Id ) => {
+  const rejectexchange = async (id) => {
     setLoading(true);
-
     try {
-      await rejectExchange(Id).then((resp) => {
+      await RejectExchange(id).then((resp) => {
         toast(<NotificationSuccess text="you successfully rejected the exchange" />);
         getItems();
       });
     } catch (error) {
       console.log({ error });
-      toast(<NotificationError text="Failed to reject exchange." />);
+      toast(<NotificationError text="Failed to reject the exchange" />);
     } finally {
       setLoading(false);
     }
   };
-
 
   const toggleForsale = async ( Id ) => {
     setLoading(true);
 
     try {
       await changeForsale(Id).then((resp) => {
-        toast(<NotificationSuccess text="you successfully changed the forsale state" />);
+        toast(<NotificationSuccess text="you successfully changed the forsale property" />);
         getItems();
       });
     } catch (error) {
       console.log({ error });
-      toast(<NotificationError text="Failed to change for sale state." />);
+      toast(<NotificationError text="Failed to change for sale property." />);
     } finally {
       setLoading(false);
     }
@@ -135,10 +132,10 @@ const Items = () => {
 
 
 
-  const buy = async (id, price) => {
+  const buy = async (Id, price) => {
     try {
       await buyItem({
-        id,
+        Id,
         price,
       }).then((resp) =>{
         toast(<NotificationSuccess text="item bought successfully" />);
@@ -172,10 +169,10 @@ const Items = () => {
                 buy={buy}
                 exchange={exchange}
                 toggleForexchange={toggleForexchange}
+                rejectexchange={rejectexchange}
+                requestexchange={requestexchange}
                 toggleForsale={toggleForsale}
                 isOwner = {account.accountId === _item.owner}
-                RequestExchange ={RequestExchange}
-                RejectExchange={RejectExchange}
               />
             ))}
           </Row>

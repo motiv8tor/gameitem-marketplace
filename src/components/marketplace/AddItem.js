@@ -54,7 +54,7 @@ const AddItem = ({ save }) => {
                 type="text"
                 placeholder="item category"
                 onChange={(e) => {
-                  setItemCategory(e.target.value);
+                 setItemCategory(e.target.value);
                 }}
               />
             </FloatingLabel>
@@ -107,6 +107,7 @@ const AddItem = ({ save }) => {
           <Button variant="outline-secondary" onClick={handleClose}>
             Close
           </Button>
+          
           <Button
             variant="dark"
             disabled={!isFormFilled()}

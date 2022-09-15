@@ -97,7 +97,7 @@ export function exchangeGameItem(
     throw new Error("game item not found");
   }
   item.exchange(forItem.owner);
-  forItem.exchange(context.predecessor);
+  forItem.exchange(context.sender);
 	itemsStorage.set(item.id, item);
 	itemsStorage.set(forItem.id, forItem);
 }

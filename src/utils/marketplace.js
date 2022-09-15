@@ -14,16 +14,15 @@ export async function buyItem({ Id, price }) {
 }
 
 export function exchangeItem( id ) {
-  return window.contract.exchangeGameItem( { itemId: id  }, GAS );
+  return window.contract.exchangeGameItem( { itemId: id }, GAS );
 }
 
-export function requestExchange( requestItemId, forItemId ) {
+export function RejectExchange( id ) {
+  return window.contract.rejectExchange( { itemId: id }, GAS );
+  
+}
+export function RequestExchange( requestItemId, forItemId ) {
   return window.contract.requestExchange( { requestItemId: requestItemId, forItemId: forItemId }, GAS );
-}
-
-
-export function rejectExchange( id ) {
-  return window.contract.rejectExchange( { itemId: id}, GAS );
 }
 
 export function changeForsale( Id ) {

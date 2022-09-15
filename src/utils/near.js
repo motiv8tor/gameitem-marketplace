@@ -20,11 +20,11 @@ export async function initializeContract() {
       // List here all view methods
       viewMethods: ["getItem", "getItems"],
       // List call methods that change state
-      changeMethods: ["buyGameItem", "setItem", "requestExchange", "rejectExchange", "exchangeGameItem", "toggleForexchange", "toggleForsale"],
+      changeMethods: ["buyGameItem", "requestExchange", "rejectExchange", "setItem", "exchangeGameItem", "toggleForexchange", "toggleForsale"],
     }
   );
 }
-
+ 
 export async function accountBalance() {
   return formatNearAmount(
     (await window.walletConnection.account().getAccountBalance()).total,

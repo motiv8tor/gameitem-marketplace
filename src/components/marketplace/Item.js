@@ -4,7 +4,7 @@ import { utils } from "near-api-js";
 import { Card, Button, Col, Badge, Stack, Form } from "react-bootstrap";
 import { useState } from "react";
 
-const Item = ({ item, buy, exchange, toggleForexchange, RequestExchange, RejectExchange, toggleForsale, isOwner}) => {
+const Item = ({ item, buy, exchange, toggleForexchange, requestexchange, rejectexchange, toggleForsale, isOwner }) => {
   const { id, gameTitle, itemCategory, description, image, price, owner, forSale, forExchange, requestExchangeId, approvedExchange, approvedId } = item;
 
     const [forItemId, setforItemId] = useState('');
@@ -13,6 +13,7 @@ const Item = ({ item, buy, exchange, toggleForexchange, RequestExchange, RejectE
   const triggerBuy = () => {
     buy(id, price);
   };
+
 
   const triggerexchange = () => {
     exchange(id);
@@ -27,20 +28,22 @@ const Item = ({ item, buy, exchange, toggleForexchange, RequestExchange, RejectE
   };
 
   const triggerRejectExchange = () => {
-    RejectExchange(id);
+    rejectexchange(id);
   };
 
   const triggerRequestExchange = () => {
-    RequestExchange(id, forItemId);
+    requestexchange(id, forItemId);
   };
 
   return (
     <Col key={id}>
       <Card className=" h-100">
         <Card.Header>
+        <span className="font-monospace text-secondary">Owner: {owner}</span>
           <Stack direction="horizontal" gap={3}>
-            <span className="font-monospace text-secondary">{owner}</span>
+            <span className="font-monospace text-secondary">Item Id: {id}</span>
           </Stack>
+
         </Card.Header>
         <div className=" ratio ratio-4x3">
           <img src={image} alt={gameTitle} style={{ objectFit: "cover" }} />
@@ -52,8 +55,8 @@ const Item = ({ item, buy, exchange, toggleForexchange, RequestExchange, RejectE
           <Card.Text className="flex-grow-1 ">{description}</Card.Text>
           <Card.Text className="flex-grow-1 ">{forSale ? "This item is for sale": "This item is not for sale"}</Card.Text>
           <Card.Text className="flex-grow-1 ">{forExchange ? "This item is available for exchange": "This item is not available for exchange"}</Card.Text>
-          <Card.Text className="flex-grow-1 ">Exchange Request: {requestExchangeId} <br/> Status: {approvedExchange ? "Approved" : "Not Approved"}</Card.Text>
-{isOwner === true  && (
+          <Card.Text className="flex-grow-1 ">Exchange Request: {requestExchangeId}</Card.Text>
+{isOwner === true  && forExchange === false && (
     <> 
 
 <Button
@@ -61,12 +64,12 @@ const Item = ({ item, buy, exchange, toggleForexchange, RequestExchange, RejectE
   className={"mb-4"}
   onClick={() =>triggertoggleForsale()}
 >
-{forSale ? "Set for sale" : "Set not for sale"}
+{forSale ? "Set not for sale" : "Set for sale"}
 </Button>
 </>
 )}
 
-{isOwner === true  && approvedExchange === true &&(
+{isOwner === true &&(
     <> 
 
 <Button
@@ -74,31 +77,31 @@ const Item = ({ item, buy, exchange, toggleForexchange, RequestExchange, RejectE
   className={"mb-4"}
   onClick={() =>triggertoggleForexchange()}
 >
-  {forExchange ? "Set for exchange" : "Set not for exchange"}
+  {forExchange ? "Set not for exchange" : "Set for exchange"}
 </Button>
 </>
 )}
 
 
-{isOwner === true  && forExchange === true && approvedExchange === true &&(
+{isOwner === true &&(
     <> 
 <Button
   variant="primary"
   className={"mb-4"}
   onClick={() =>triggerexchange()}
 >
-  
+  Exchange
 </Button>
 </>
 )}
 
 
-{isOwner !== true  && forExchange == true && approvedExchange == false &&(
+{isOwner !== true  && forExchange === true &&(
     <> 
     <Form.Control
      className={"pt-2 mb-1"}
-      type="number"
-       placeholder="Enter the id of your item "
+      type="text"
+       placeholder="Enter the id of your own item "
        onChange={(e) => {
          setforItemId(e.target.value);
         }}
@@ -109,27 +112,27 @@ const Item = ({ item, buy, exchange, toggleForexchange, RequestExchange, RejectE
   className={"mb-4"}
   onClick={() =>triggerRequestExchange()}
 >
-  
+  Request Exchange
 </Button>
 </>
 )}
 
 
-{isOwner == true  && forExchange == true &&(
+{isOwner === true  && forExchange === true &&(
     <> 
 <Button
   variant="primary"
   className={"mb-4"}
   onClick={() =>triggerRejectExchange()}
 >
-  
+  Reject Exchange
 </Button>
 </>
 )}
 
 
 
-         {isOwner!== true && forSale == true &&(
+         {isOwner!== true && forSale === true && forExchange == false &&(
           <Button
             variant="outline-dark"
             onClick={triggerBuy}

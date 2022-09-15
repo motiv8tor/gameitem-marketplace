@@ -26,6 +26,9 @@ export class Item {
         item.owner = context.sender;
         item.forSale = false;
         item.forExchange = false;
+        item.requestExchangeId ="";
+        item.approvedExchange= false;
+        item.approvedId ="";
         return item;
     }
     
@@ -68,6 +71,7 @@ export class Item {
     public exchange(owner: string): void {
         this.approvedExchange = false;
         this.approvedId = "";
+        this.requestExchangeId ="";
         this.forSale = false;
         this.owner = owner;
     }

@@ -42,7 +42,7 @@ const App = function AppWrapper() {
           </main>
         </Container>
       ) : (
-        <Cover name="Near Game item Marketplace" login={login} coverImg="" />
+        <Cover name="Near Game item Marketplace" login={login} coverImg="https://cdn-front-static.dmarket.com/prod/v1-210-4/assets/img/home/articles/marketplace-x2.png" />
       )}
     </>
   );
