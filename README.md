@@ -1,4 +1,4 @@
-The app is hosted here: https://boisterous-mandazi-4762db.netlify.app
+Demo app is hosted here: https://boisterous-mandazi-4762db.netlify.app
 
 # Description.
 
